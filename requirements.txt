@@ -1,0 +1,17 @@
+# Runtime dependencies of the bob_q21img node.
+# Note: cv_bridge comes from the ROS 2 installation (e.g. ros-humble-cv-bridge), not pip.
+--extra-index-url https://download.pytorch.org/whl/cu128
+
+torch>=2.6            # from the system (~/.local), CUDA 12.8 build
+diffusers @ git+https://github.com/huggingface/diffusers@7263f3317f6b392d62f41e9d75ed9d7e21fc5a5c
+transformers==5.17.0
+torchvision==0.24.1+cu128
+torchao==0.15.0
+peft==0.21.0
+safetensors>=0.8.0
+huggingface_hub>=1.31,<2
+accelerate
+sentencepiece
+numpy<2.0
+opencv-python
+Pillow

@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# ROS 2
+install/
+build/
+log/
+
+# Model weights and cache
+models/
+generated_images/
+mnt/
+*.png
+*.jpg
+*.jpeg
+
+# IDEs
+.vscode/
+.idea/
+.project
+.pydevproject
+.settings/
+.DS_Store

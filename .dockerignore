@@ -1,0 +1,16 @@
+models/
+generated_images/
+.git/
+.vscode/
+.idea/
+build/
+install/
+log/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.png
+*.jpg
+*.jpeg
+*.mp4

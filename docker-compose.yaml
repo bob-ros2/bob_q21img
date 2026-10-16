@@ -1,0 +1,51 @@
+services:
+  bob-q21img:
+    image: ghcr.io/bob-ros2/bob-q21img:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ROS_DISTRO: humble
+    container_name: bob-q21img
+    network_mode: host
+    ipc: host
+    pid: host
+    environment:
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-55}
+      - ROS_NAMESPACE=${ROS_NAMESPACE:-/q21img}
+      - Q21IMG_REPO_ID=${Q21IMG_REPO_ID:-Qwen/Qwen-Image-2.1}
+      - Q21IMG_MODEL_DIR=/app/models
+      - Q21IMG_DEVICE=${Q21IMG_DEVICE:-cuda:0}
+      - Q21IMG_PROMPT=${Q21IMG_PROMPT:-}
+      - Q21IMG_INPUT_IMAGE=${Q21IMG_INPUT_IMAGE:-}
+      - Q21IMG_ONCE=${Q21IMG_ONCE:-false}
+      - Q21IMG_IMAGE_PATH=${Q21IMG_IMAGE_PATH:-/app/generated_images/auto}
+      - Q21IMG_SEED=${Q21IMG_SEED:--1}
+      - Q21IMG_IMAGE_COUNTER_START=${Q21IMG_IMAGE_COUNTER_START:-9000}
+      - Q21IMG_HEIGHT=${Q21IMG_HEIGHT:-1280}
+      - Q21IMG_WIDTH=${Q21IMG_WIDTH:-1280}
+      - Q21IMG_OUTPUT_RESOLUTION=${Q21IMG_OUTPUT_RESOLUTION:-0}
+      - Q21IMG_NUM_STEPS=${Q21IMG_NUM_STEPS:-40}
+      - Q21IMG_GUIDANCE=${Q21IMG_GUIDANCE:-1.0}
+      - Q21IMG_NEGATIVE_PROMPT=${Q21IMG_NEGATIVE_PROMPT:-}
+      - Q21IMG_NUM_IMAGES=${Q21IMG_NUM_IMAGES:-1}
+      - Q21IMG_FRAME_ID=${Q21IMG_FRAME_ID:-q21img}
+      - Q21IMG_KEEP_LOADED=${Q21IMG_KEEP_LOADED:-true}
+      - Q21IMG_PRELOAD=${Q21IMG_PRELOAD:-false}
+      - Q21IMG_CPU_OFFLOAD=${Q21IMG_CPU_OFFLOAD:-true}
+      - Q21IMG_SEQUENTIAL_OFFLOAD=${Q21IMG_SEQUENTIAL_OFFLOAD:-false}
+      - Q21IMG_VAE_TILING=${Q21IMG_VAE_TILING:-true}
+    volumes:
+      - ${MODEL_DIR:-./models}:/app/models:ro
+      - ${OUTPUT_DIR:-./generated_images}:/app/generated_images
+      - ./config:/app/ros2_ws/src/bob_q21img/config
+      - ${MNT_DIR:-./mnt}:/mnt
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+    command: ["ros2", "run", "bob_q21img", "tti", "--ros-args", "-r", "__ns:=${ROS_NAMESPACE:-/q21img}", "--params-file", "/app/ros2_ws/src/bob_q21img/config/tti.yaml"]
