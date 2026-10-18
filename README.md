@@ -175,6 +175,7 @@ Supported URI schemes for `image_url`:
 | `num_images_per_prompt`| `Q21IMG_NUM_IMAGES` | `1` | Number of images to generate per prompt. |
 | `frame_id` | `Q21IMG_FRAME_ID` | `q21img` | Frame ID for published ROS image headers. |
 | `image_counter_start` | `Q21IMG_IMAGE_COUNTER_START` | `9000` | Starting index for filename counters in `auto` mode; dynamic resets supported. |
+| `image_counter_digits` | `Q21IMG_IMAGE_COUNTER_DIGITS` | `7` | Number of zero-padded digits for the image filename counter (e.g. `7` -> `q21img_0000007_...`). |
 | `image_path` | `Q21IMG_IMAGE_PATH` | `generated_images/auto` | Filepath or directory for saving images. Paths ending in `auto` create incrementing filenames. |
 
 #### Static Parameters (Configured at node startup)
